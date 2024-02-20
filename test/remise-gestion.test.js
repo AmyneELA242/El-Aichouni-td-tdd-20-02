@@ -26,4 +26,28 @@ describe('Gestion des remises', () => {
         expect(panier.calculerMontantTotal()).to.equal(85);
         panier.genererRecapitulatif();
     });
+
+    it('ne devrait pas appliquer la remise si le coupon n\'existe pas', () => {
+        const panier = new Panier();
+        const articleA = new Article('ProduitA', 100);
+        panier.ajouterArticle(articleA);
+    
+        const coupon = new Coupon('CODE456', 'Réduction ProduitA', 15);
+        panier.appliquerCoupon(coupon);
+    
+        expect(articleA.prixRemise).to.equal(100);
+        panier.genererRecapitulatif();
+    });
+    
+    it('ne devrait pas appliquer la remise si le prixRemise est déjà différent du prix', () => {
+        const panier = new Panier();
+        const articleA = new Article('ProduitA', 80, 70);
+        panier.ajouterArticle(articleA);
+    
+        const coupon = new Coupon('CODE123', 'Réduction ProduitA', 15);
+        panier.appliquerCoupon(coupon);
+    
+        expect(articleA.prixRemise).to.equal(70);
+        panier.genererRecapitulatif();
+    });
 });
