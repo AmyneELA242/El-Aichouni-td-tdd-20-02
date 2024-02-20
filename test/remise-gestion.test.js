@@ -15,11 +15,13 @@ describe('Gestion des remises', () => {
 
     it('ne devrait pas appliquer la remise du coupon plus d\'une fois sur le même article', () => {
         const panier = new Panier();
-        const article = new Article('ProduitB', 50);
-        panier.ajouterArticle(article);
-        const coupon = new Coupon('CODE456', 'Réduction ProduitB', 20);
+        const articleA = new Article('ProduitA', 100);
+        panier.ajouterArticle(articleA);
+    
+        const coupon = new Coupon('CODE123', 'Réduction ProduitA', 15);
         panier.appliquerCoupon(coupon);
-        panier.appliquerCoupon(coupon);
-        expect(article.prixRemise).to.equal(30);
+        panier.appliquerCoupon(coupon); // Appliquer à nouveau le coupon
+    
+        expect(panier.calculerMontantTotal()).to.equal(85); // La remise ne devrait pas changer
     });
 });
