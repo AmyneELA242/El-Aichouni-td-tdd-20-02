@@ -1,5 +1,6 @@
 class Produit {
-    constructor(nom, quantite, datePeremption) {
+    constructor(id, nom, quantite, datePeremption) {
+        this.id = id;
         this.nom = nom;
         this.quantite = quantite;
         this.datePeremption = datePeremption;
@@ -17,14 +18,15 @@ class Rayon {
         this.verifierStock();
     }
 
-    supprimerProduit(nomProduit) {
-        const index = this.stock.findIndex(produit => produit.nom === nomProduit);
+    supprimerProduit(idProduit) {
+        const index = this.stock.findIndex(produit => produit.id === idProduit);
 
         if (index !== -1) {
+            const nomProduitSupprime = this.stock[index].nom;
             this.stock.splice(index, 1);
-            console.log(`Produit supprimé : ${nomProduit}`);
+            console.log(`Produit supprimé : ${nomProduitSupprime}`);
         } else {
-            console.log(`Produit non trouvé : ${nomProduit}`);
+            console.log(`Produit non trouvé avec l'identifiant : ${idProduit}`);
         }
 
         this.verifierStock();
@@ -36,7 +38,6 @@ class Rayon {
             console.log(`${produit.nom} - Quantité : ${produit.quantite} - Date de péremption : ${produit.datePeremption}`);
         });
 
-        // Vérifier les quantités et dates de péremption
         this.stock.forEach(produit => {
             if (produit.quantite < 0) {
                 console.log(`Attention! Stock négatif pour ${produit.nom}`);
@@ -64,15 +65,15 @@ class Rayon {
 // Exemple d'utilisation
 const rayon = new Rayon();
 
-const produit1 = new Produit('Pommes', 50, '2024-02-28');
-const produit2 = new Produit('Bananes', 30, '2024-03-15');
+const produit1 = new Produit('01', 'Pommes', 50, '2024-02-28');
+const produit2 = new Produit('02', 'Bananes', 30, '2024-03-15');
 
 rayon.ajouterProduit(produit1);
 rayon.ajouterProduit(produit2);
 
-rayon.supprimerProduit('Pommes');
+rayon.supprimerProduit('01');
 
-rayon.ajouterProduit(new Produit('Oranges', -10, '2024-02-20')); // Stock négatif
-rayon.ajouterProduit(new Produit('Lait', 20, '2023-12-01')); // Produit périmé
+rayon.ajouterProduit(new Produit('03', 'Oranges', -10, '2024-02-20'));
+rayon.ajouterProduit(new Produit('04', 'Lait', 20, '2023-12-01'));
 
 rayon.visualiserEvolutionStock('2024-01-01', '2024-03-01');
