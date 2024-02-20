@@ -1,4 +1,7 @@
 const { expect } = require('chai');
+const Article = require('../src/article.js');
+const Coupon = require('../src/coupon.js');
+const Panier = require('./panier.js');
 
 describe('Gestion des remises', () => {
     it('devrait appliquer correctement la remise d\'un coupon sur le prix d\'un article', () => {
