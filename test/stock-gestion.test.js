@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { Produit, Rayon } = require('./votre_fichier_contenant_les_classes');
+const { Produit, Rayon } = require('../src/stock-gestion.js');
 
 describe('Gestion des stocks', () => {
     let rayon;
@@ -12,14 +12,14 @@ describe('Gestion des stocks', () => {
     it('devrait ajouter un produit au stock', () => {
         const produit = new Produit('Pommes', 50, '2024-02-28');
         rayon.ajouterProduit(produit);
-        expect(rayon.stock).to.have.lengthOf(1);
+        expect(rayon.stock).to.have.lengthOf(1);//Marche mais pas besoin car tableau possede d'autre vals
     });
 
     it('devrait supprimer un produit du stock', () => {
         const produit = new Produit('Pommes', 50, '2024-02-28');
         rayon.stock = [produit];
         rayon.supprimerProduit('Pommes');
-        expect(rayon.stock).to.have.lengthOf(0);
+        expect(rayon.stock).to.have.lengthOf(0);//Risque de suprimer les produits pommes
     });
 
     it('devrait vérifier que la quantité de produits est correcte après un ajout', () => {
