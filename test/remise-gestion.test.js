@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const Article = require('../src/article.js');
 const Coupon = require('../src/coupon.js');
-const Panier = require('./panier.js');
+const Panier = require('../src/panier.js');
 
 describe('Gestion des remises', () => {
     it('devrait appliquer correctement la remise d\'un coupon sur le prix d\'un article', () => {
@@ -11,6 +11,7 @@ describe('Gestion des remises', () => {
         const coupon = new Coupon('CODE123', 'Réduction ProduitA', 15);
         panier.appliquerCoupon(coupon);
         expect(article.prixRemise).to.equal(85);
+        panier.afficherRemises();
     });
 
     it('ne devrait pas appliquer la remise du coupon plus d\'une fois sur le même article', () => {
@@ -20,8 +21,9 @@ describe('Gestion des remises', () => {
     
         const coupon = new Coupon('CODE123', 'Réduction ProduitA', 15);
         panier.appliquerCoupon(coupon);
-        panier.appliquerCoupon(coupon); // Appliquer à nouveau le coupon
+        panier.appliquerCoupon(coupon);
     
-        expect(panier.calculerMontantTotal()).to.equal(85); // La remise ne devrait pas changer
+        expect(panier.calculerMontantTotal()).to.equal(85);
+        panier.genererRecapitulatif();
     });
 });
